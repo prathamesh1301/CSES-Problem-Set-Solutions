@@ -22,4 +22,5 @@ int main(){
  
     }
     cout<<ct;
-    
+    return 0;
+}
