@@ -70,3 +70,83 @@ int main()
 
 
 }
+
+
+//Tabulation Approach
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define lld double
+int mod=1e9+7;
+
+const int array_size = 1e6+100;
+bool primes[array_size];
+
+ll gcd(ll a, ll b){if (b == 0)return a;return gcd(b, a % b);}
+ll lcm(ll a, ll b){return ((a/gcd(a,b))*b);}
+void sieve(){
+  
+   primes[0] = false;
+   primes[1] = false;
+   for(ll i = 2;i*i<=array_size;i++){
+      if(primes[i]){
+         for(ll j=i*i;j<=array_size;j+=i)
+            primes[j] = false;
+      }
+   }
+}
+
+vector<int> toVec(int n){
+   vector<int> a;
+   while(n>0){
+      int r = n%10;
+      a.push_back(r);
+      n/=10;
+   }
+   return a;
+}
+
+void solve(){
+   int n;
+   cin>>n;
+   vector<int> dp(n+1,INT_MAX);
+   if(n<=9){
+      cout<<1<<endl;
+      return;
+   }
+   dp[0]=0;
+   for(int i=1;i<=9;i++){
+      dp[i]=1;
+   }
+   for(int i=10;i<=n;i++){
+      vector<int> a = toVec(i);
+      for(int j=0;j<a.size();j++){
+         if(a[j]==0) continue;
+         if(i-a[j]>=0)
+            dp[i] = min(dp[i],1+dp[i-a[j]]);
+      }
+   }
+   cout<<dp[n]<<endl;
+
+}
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0); 
+    //memset(primes,true,sizeof(primes));
+    //sieve();  
+    //memset(dp,false,sizeof(dp));
+    //precal();
+    /*int t;
+
+    cin>>t;
+
+    while(t--)*/
+        solve();
+    return 0;
+
+
+}
